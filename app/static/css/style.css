@@ -1,0 +1,883 @@
+/* Main styles for the system monitor application */
+
+:root {
+    /* Modern dark theme colors */
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --card-header-bg: #252525;
+    --text-color: #ffffff;
+    --text-muted: #a0a0a0;
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    --card-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    --accent-blue: #4dabf7;
+    --accent-green: #40c057;
+    --accent-red: #fa5252;
+    --accent-yellow: #fcc419;
+    --accent-purple: #7950f2;
+    --accent-teal: #20c997;
+    --accent-orange: #ff922b;
+    --chart-grid: rgba(255, 255, 255, 0.08);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --gradient-blue: linear-gradient(135deg, #1971c2, #4dabf7);
+    --gradient-green: linear-gradient(135deg, #2b8a3e, #40c057);
+    --gradient-red: linear-gradient(135deg, #c92a2a, #fa5252);
+    --gradient-yellow: linear-gradient(135deg, #e67700, #fcc419);
+    --gradient-purple: linear-gradient(135deg, #5f3dc4, #7950f2);
+    --gradient-teal: linear-gradient(135deg, #087f5b, #20c997);
+    --gradient-orange: linear-gradient(135deg, #d9480f, #ff922b);
+    --gauge-bg: #2c2c2c;
+    
+    /* Health status colors */
+    --health-excellent: #20c997;
+    --health-good: #40c057;
+    --health-fair: #fcc419;
+    --health-poor: #fa5252;
+    
+    /* CPU heatmap colors */
+    --cpu-cool: #4dabf7;
+    --cpu-warm: #fcc419;
+    --cpu-hot: #fa5252;
+}
+
+/* Light theme colors */
+.light-mode {
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --card-header-bg: #f1f3f5;
+    --text-color: #212529;
+    --text-muted: #6c757d;
+    --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    --card-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --accent-blue: #228be6;
+    --accent-green: #2f9e44;
+    --accent-red: #e03131;
+    --accent-yellow: #f08c00;
+    --accent-purple: #6741d9;
+    --accent-teal: #12b886;
+    --accent-orange: #e8590c;
+    --chart-grid: rgba(0, 0, 0, 0.05);
+    --border-color: rgba(0, 0, 0, 0.1);
+    --gradient-blue: linear-gradient(135deg, #1c7ed6, #4dabf7);
+    --gradient-green: linear-gradient(135deg, #2b8a3e, #51cf66);
+    --gradient-red: linear-gradient(135deg, #c92a2a, #fa5252);
+    --gradient-yellow: linear-gradient(135deg, #e67700, #ffec99);
+    --gradient-purple: linear-gradient(135deg, #5f3dc4, #9775fa);
+    --gradient-teal: linear-gradient(135deg, #087f5b, #20c997);
+    --gradient-orange: linear-gradient(135deg, #d9480f, #ff922b);
+    --gauge-bg: #f1f3f5;
+    
+    /* Health status colors */
+    --health-excellent: #0ca678;
+    --health-good: #2b8a3e;
+    --health-fair: #e67700;
+    --health-poor: #c92a2a;
+    
+    /* CPU heatmap colors */
+    --cpu-cool: #1c7ed6;
+    --cpu-warm: #e67700;
+    --cpu-hot: #c92a2a;
+}
+
+/* General styles */
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Main content container */
+.container-fluid {
+    max-width: 1920px;
+    padding: 1rem 1.5rem;
+}
+
+/* Cards styling */
+.card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    background-color: var(--card-bg);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    border-radius: 1rem 1rem 0 0 !important;
+    background-color: var(--card-header-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-header h2, .card-header h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.card-header i {
+    margin-right: 0.75rem;
+    color: var(--accent-blue);
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+/* Theme toggle */
+.theme-toggle {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    color: var(--text-color);
+}
+
+.theme-toggle:hover {
+    background-color: rgba(130, 130, 130, 0.2);
+}
+
+/* Status indicators */
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    display: inline-block;
+}
+
+.status-good {
+    background-color: var(--accent-green);
+    box-shadow: 0 0 8px var(--accent-green);
+}
+
+.status-warning {
+    background-color: var(--accent-yellow);
+    box-shadow: 0 0 8px var(--accent-yellow);
+}
+
+.status-danger {
+    background-color: var(--accent-red);
+    box-shadow: 0 0 8px var(--accent-red);
+}
+
+/* Dashboard grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.dashboard-grid .widget-full {
+    grid-column: span 12;
+}
+
+.dashboard-grid .widget-half {
+    grid-column: span 6;
+}
+
+.dashboard-grid .widget-third {
+    grid-column: span 4;
+}
+
+.dashboard-grid .widget-quarter {
+    grid-column: span 3;
+}
+
+.widget-small {
+    grid-column: span 3;
+}
+
+.widget-medium {
+    grid-column: span 5;
+}
+
+.widget-large {
+    grid-column: span 7;
+}
+
+/* Value cards */
+.value-card {
+    padding: 1rem;
+    display: flex;
+    gap: 0.75rem;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    flex-direction: row;
+    align-items: center;
+}
+
+.value-card:hover {
+    transform: translateY(-3px);
+}
+
+.value-card .icon-wrapper {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--gradient-blue);
+}
+
+.value-card .icon-wrapper.cpu {
+    background: var(--gradient-red);
+}
+
+.value-card .icon-wrapper.memory {
+    background: var(--gradient-green);
+}
+
+.value-card .icon-wrapper.disk {
+    background: var(--gradient-yellow);
+}
+
+.value-card .icon-wrapper.network {
+    background: var(--gradient-purple);
+}
+
+.value-card .icon-wrapper.weather {
+    background: var(--gradient-teal);
+}
+
+.value-card .icon-wrapper.time {
+    background: var(--gradient-orange);
+}
+
+.value-card .icon-wrapper.health {
+    background: var(--gradient-green);
+}
+
+.value-card .icon-wrapper i {
+    font-size: 1.5rem;
+}
+
+.value-card .content {
+    flex: 1;
+}
+
+.value-card .content h3 {
+    font-weight: 600;
+    font-size: 1.15rem;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.value-card .content p {
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.value-card .small-info {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Health score widget */
+.health-card .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.health-score-container {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.health-donut-chart {
+    width: 70px;
+    height: 70px;
+    margin-right: 1rem;
+}
+
+.health-score-circle {
+    width: 100%;
+    height: 100%;
+}
+
+.health-score-circle-bg {
+    fill: none;
+    stroke: var(--card-header-bg);
+    stroke-width: 3;
+}
+
+.health-score-circle-fill {
+    fill: none;
+    stroke-width: 3;
+    stroke: var(--health-good);
+    stroke-linecap: round;
+    transition: all 0.5s ease;
+}
+
+.health-score-value {
+    fill: var(--text-color);
+    font-size: 10px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.health-status {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.health-status-badge {
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+    color: var(--health-good);
+}
+
+.health-issues {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Weather widget styling */
+.weather-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+}
+
+.weather-temp {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.weather-condition {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.weather-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.weather-details span {
+    display: flex;
+    align-items: center;
+}
+
+.weather-details i {
+    margin-right: 0.25rem;
+}
+
+/* Time widget */
+.time-display {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.date-display {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* CPU heatmap */
+.cpu-heatmap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1rem;
+}
+
+.cpu-core-cell {
+    width: 45px;
+    height: 45px;
+    border-radius: 6px;
+    background-color: var(--card-header-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.cpu-core-cell::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background-color: var(--cpu-cool);
+    transition: height 0.5s ease, background-color 0.5s ease;
+    z-index: 0;
+}
+
+.cpu-core-cell.medium::after {
+    background-color: var(--cpu-warm);
+}
+
+.cpu-core-cell.high::after {
+    background-color: var(--cpu-hot);
+}
+
+.cpu-core-number {
+    font-size: 0.7rem;
+    font-weight: 600;
+    z-index: 1;
+}
+
+.cpu-core-usage {
+    font-size: 0.75rem;
+    z-index: 1;
+}
+
+/* Memory breakdown chart */
+.memory-breakdown-chart-container {
+    height: 160px;
+    margin-bottom: 1rem;
+}
+
+/* Process table styling */
+.process-table {
+    font-size: 0.85rem;
+}
+
+.process-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: var(--card-header-bg);
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.5rem;
+}
+
+.process-table thead th:hover {
+    background-color: rgba(130, 130, 130, 0.2);
+}
+
+.process-table tbody tr:hover {
+    background-color: rgba(130, 130, 130, 0.1);
+}
+
+.process-table th i.fas {
+    font-size: 0.7rem;
+    margin-left: 0.25rem;
+    opacity: 0.5;
+}
+
+.process-table th.sorted-asc i.fas, .process-table th.sorted-desc i.fas {
+    opacity: 1;
+}
+
+.search-box {
+    position: relative;
+    max-width: 300px;
+}
+
+.search-box input {
+    padding-left: 30px;
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.search-box::before {
+    content: '\f002';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.process-details {
+    background-color: var(--card-header-bg);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+/* Progress detail styling */
+.progress-detail {
+    height: 10px;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    background-color: var(--gauge-bg);
+}
+
+.progress-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 2px;
+}
+
+/* Loading placeholders */
+.loading-placeholder {
+    background-color: var(--card-header-bg);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+/* Quick stats */
+.quick-stats {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.quick-stats.extended {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.quick-stat-item {
+    background-color: var(--card-bg);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 110px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quick-stat-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.quick-stat-item .stat-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+}
+
+.quick-stat-item .stat-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.quick-stat-item .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.chart-container {
+    position: relative;
+    margin: 0 auto;
+    height: 140px;
+    max-width: 140px;
+}
+
+.chart-container canvas {
+    max-height: 100%;
+}
+
+.mini-chart-container {
+    height: 100px;
+}
+
+.disk-chart-container, 
+.network-chart-container {
+    height: 160px;
+    margin-bottom: 1rem;
+}
+
+.progress {
+    background-color: var(--gauge-bg);
+}
+
+.progress-bar {
+    transition: width 0.5s ease;
+}
+
+.progress-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 2px;
+}
+
+/* Core usage container */
+.core-usage-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.core-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+}
+
+.core-progress {
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: var(--gauge-bg);
+}
+
+@media (max-width: 1199.98px) {
+    .dashboard-grid .widget-quarter {
+        grid-column: span 6;
+    }
+    .dashboard-grid .widget-third {
+        grid-column: span 6;
+    }
+    .widget-small {
+        grid-column: span 6;
+    }
+    .widget-medium, .widget-large {
+        grid-column: span 12;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1rem;
+    }
+    
+    .dashboard-grid .widget-half, 
+    .dashboard-grid .widget-third,
+    .dashboard-grid .widget-quarter,
+    .widget-small,
+    .widget-medium,
+    .widget-large {
+        grid-column: span 6;
+    }
+    
+    .container-fluid {
+        padding: 0.75rem;
+    }
+    
+    .quick-stats,
+    .quick-stats.extended {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+.navbar {
+    background-color: var(--card-bg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+    padding: 0.5rem 1rem;
+}
+
+.navbar .navbar-brand {
+    font-weight: 700;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+}
+
+.navbar .nav-link {
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    color: var(--accent-blue);
+}
+
+.navbar .nav-link.active {
+    color: var(--accent-blue);
+    border-bottom: 2px solid var(--accent-blue);
+}
+
+.navbar .navbar-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    padding-left: 1rem;
+    border-left: 1px solid var(--border-color);
+}
+
+/* Process details styling */
+.process-detail-card {
+    background-color: var(--card-bg);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.process-detail-card .detail-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.process-detail-card .detail-value {
+    font-weight: 500;
+    word-break: break-all;
+}
+
+/* Nav tabs styling for disk and network sections */
+.nav-tabs {
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: transparent;
+    color: var(--text-color);
+}
+
+.nav-tabs .nav-link.active {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    background: transparent;
+}
+
+/* System alerts styling */
+.alerts-container {
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.alert-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: var(--card-header-bg);
+    border-left: 3px solid var(--accent-blue);
+}
+
+.alert-item.warning {
+    border-left-color: var(--accent-yellow);
+}
+
+.alert-item.danger {
+    border-left-color: var(--accent-red);
+}
+
+.alert-item.success {
+    border-left-color: var(--accent-green);
+}
+
+.alert-icon {
+    margin-right: 0.75rem;
+    font-size: 1rem;
+}
+
+.alert-content {
+    flex-grow: 1;
+}
+
+.alert-title {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.alert-message {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.alert-time {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+/* Animation for updates */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(77, 171, 247, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(77, 171, 247, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(77, 171, 247, 0);
+    }
+}
+
+.pulse-update {
+    animation: pulse 1s ease-out;
+    border-radius: 0.25rem;
+}
+
+/* System info grid */
+.system-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.75rem;
+}
+
+.small-info-card {
+    background-color: var(--card-header-bg);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+}
+
+h5 {
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+} 

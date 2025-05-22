@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  system-monitor:
+    build: .
+    container_name: system-monitor
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app:/app/app
+    restart: unless-stopped 
