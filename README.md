@@ -1,4 +1,4 @@
-# System Monitor
+# System Monitor application for both linux and windows
 
 Real-time system monitoring application built with Flask and Socket.IO that provides comprehensive insights into your system's performance.
 
