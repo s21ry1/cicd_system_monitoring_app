@@ -1,4 +1,5 @@
 # System Monitor application for both linux and windows
+# this project is efficient to monitor the system activity
 
 Real-time system monitoring application built with Flask and Socket.IO that provides comprehensive insights into your system's performance.
 
